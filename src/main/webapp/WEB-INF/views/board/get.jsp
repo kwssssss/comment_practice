@@ -136,7 +136,7 @@ const COMMENT_URL = '/api/board/${param.bno}/comment/';
 </c:if>
 
 <div class="my-5">
-	댓글 목록
+	<i class="fa-regular fa-comments"></i> 댓글 목록
 	<hr>
 	<div class="comment-list">
 		<!-- 여기에 댓글 목록이 나오게 할 예정 -->

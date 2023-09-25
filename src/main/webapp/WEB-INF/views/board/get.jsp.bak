@@ -16,7 +16,6 @@
 const COMMENT_URL = '/api/board/${param.bno}/comment/';
 
 	$(document).ready(async function() {
-
 		$('.remove').click(function() {
 			if (!confirm("정말 삭제할까요?")) return;
 			document.forms.removeForm.submit();
@@ -37,55 +36,6 @@ const COMMENT_URL = '/api/board/${param.bno}/comment/';
 		$('.comment-list').on('click', '.comment-delete-btn', deleteComment);
 
 		
-		
-		/* const bno = ${board.bno};
-		const url = '/api/board/' +bno + '/comment'; // 여기에 밑에 코드가 다 들어가잇슴
-		console.log(url); */
-		
-		// 생성
-		/* let comment = {
-			bno, //bno= bno,에서 bno만 써도 된대
-			writer: '${username}',
-			content: "추가 글입니다."
-		};
-		console.log(comment);
-		console.log(JSON.stringify(comment)); // 직렬화, 문자열로 변환됨
-		
-		comment = await rest_create(url, comment);
-		console.log(comment); */
-		
-		/* // 수정
-		let comment = {
-				no: 5,
-				content: "수정한 글입니다."
-		};
-		
-		comment = await rest_modify(url + "/5", comment); // 기존 url에 대상이 되는 글 번호
-		console.log(comment); */
-		
-		/* // 삭제
-		let result = await rest_delete(url + "/1"); // 기존 url에 대상이 되는 글 번호
-		console.log(result);
-		
-		
-		// 목록 추출
-		let data= await rest_get(url);
-		console.log(data); */
-		
-		//let res = await fetch('/api/board/303/comment'); //get 요청할때는 옵션 설정할필요업슴, 두번째 매개변수가 없다? get요청인거임 ㅇㅋ?
-		//let data = await res.json(); 
-		//console.log(data);
-				
-		//.then(res => res.json()) //매개변수가 하날 경우에 한해서 괄호도 생략 가능 //본체가 한줄 짜리면 대괄호도 생략 가능.. 리턴도 생략가능///.		//.then(function (res) {			
-				//res.json(); //json을 리턴한다는건 ? promise가 리턴된다는 것, json객체를 실제 객체로 바꾸라는 뜻(역직렬화)
-		//.then(data => console.log(data));
-				/* .then(function(data) {
-				console.log(data);
-			}); */
-		
-//		console.log('fetch 호출 완료')
-		
-			// res=>console.log(res)
 			
 		//수정확인버튼 클릭
 		$('.comment-list').on('click', '.comment-update-btn', function (e){

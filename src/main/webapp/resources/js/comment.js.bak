@@ -13,9 +13,8 @@ function createCommentTemplate(comment, writer) {
 			<div class="comment-title my-2 d-flex justify-content-between">
 				<div>
 					<strong class="writer"> <img
-						src="/security/avatar/sm/{comment.writer}" class="avatar-sm">{comment.writer}
-					</strong> 
-					<span class="text-muted ml-3 comment-date">
+						src="/security/avatar/sm/${comment.writer}" class="avatar-sm">${comment.writer}
+					</strong> <span class="text-muted ml-3 comment-date">
 						${moment(comment.regDate).format('YYYY-MM-DD hh:mm')}
 					 </span>
 				</div>
@@ -58,6 +57,7 @@ async function createComment(bno, writer) {
 	if(!confirm('댓글을 추가할까요?')) return;
 	let comment = { bno, writer , content }
 	console.log(comment);
+
 
 	// REST로 등록
 	comment = await rest_create(COMMENT_URL, comment);

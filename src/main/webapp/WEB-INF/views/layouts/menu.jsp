@@ -26,7 +26,7 @@
 					<li class="nav-item">
 						<a class="nav-link" href="/security/profile"> 
 							<img src="/security/avatar/sm/${username}" class="avatar-sm" /> 
-							${username}"<%-- <sec:authentication property="principal.username" /> --%>
+							${username}<%-- <sec:authentication property="principal.username" /> --%>
 						</a>
 					</li>
 					

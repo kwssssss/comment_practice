@@ -18,6 +18,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.security.web.csrf.CsrfFilter;
+import org.springframework.web.filter.CharacterEncodingFilter;
 
 import lombok.extern.log4j.Log4j;
 
@@ -44,13 +46,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		
+		CharacterEncodingFilter filter = new CharacterEncodingFilter();
+		filter.setEncoding("UTF-8");
+		filter.setForceEncoding(true);
+		
+		http.addFilterBefore(filter, CsrfFilter.class); // 필터를 어디에다가 끼울꺼냐?? csrfFilter 앞에 끼워라
+		
+		http.csrf().ignoringAntMatchers("/api/**"); // csrf 설정, ()패턴(우리는 ("/api/**))에 맞으면 csrf는 무시하겠다./
+		
 		http.authorizeRequests()
-			 .antMatchers("/security/all").permitAll()
-			 .antMatchers("/security/admin").access("hasRole('ROLE_ADMIN')")
-			 .antMatchers("/security/member").access("hasRole('ROLE_MEMBER')");
+			 .antMatchers("/security/profile").authenticated()
+			 .antMatchers(
+					 			"/board/register", 
+								"/board/modify", 
+								"/board/remove").authenticated() // security가 시스템적으로 해줄 수 잇는건 로그인 여부 확인까지
+			.antMatchers(
+					 			"/travel/register", 
+								"/travel/modify", 
+								"/travel/remove").access("hasRole('ROLE_MANAGER')");
 		
 		http.formLogin()
-			.loginPage("/security/login") // 로그인 안했으면 이 url로 리다이렉트 해줌
+			.loginPage("/security/login?error=login_required") // 로그인 안했으면 이 url로 리다이렉트 해줌, ?error=login_required < 여기로 온 이유가 로그인이 안되어서 그렇다는 뜻
 			.loginProcessingUrl("/security/login") // form에 제시할 url
 			.defaultSuccessUrl("/")
 			.failureUrl("/security/login?error=true"); // el : param.error, //로그인 실패할 경우 리다이렉트하는 url

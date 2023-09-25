@@ -12,19 +12,21 @@
 	<div class="collapse navbar-collapse" id="collapsibleNavbar">
 		<!-- 좌측 메뉴 구성 -->
 		<ul class="navbar-nav">
-			<li class="nav-item"><a class="nav-link" href="#">메뉴1</a></li>
-			<li class="nav-item"><a class="nav-link" href="#">메뉴2</a></li>
+			<li class="nav-item"><a class="nav-link" href="/board/list">보드 게시판</a></li>
+			<li class="nav-item"><a class="nav-link" href="/travel/list">여행지</a></li>
 			<li class="nav-item"><a class="nav-link" href="#">메뉴3</a></li>
 		</ul>
 
 		<!-- 우측 메뉴 -->
 		<ul class="navbar-nav ml-auto">
 			<sec:authorize access="isAuthenticated()">
+			
+				<sec:authentication property="principal.username" var="username"/> <!-- 출력하지 않고 출력할 내용을 var 이름으로 scope 저장 -->
 				<!-- 로그인 상태 -->
 					<li class="nav-item">
-						<a class="nav-link" href="#"> 
-							<img src="https://randomuser.me/api/portraits/men/12.jpg" class="avatar-sm" /> 
-							<sec:authentication property="principal.username" />
+						<a class="nav-link" href="/security/profile"> 
+							<img src="/security/avatar/sm/${username}" class="avatar-sm" /> 
+							${username}"<%-- <sec:authentication property="principal.username" /> --%>
 						</a>
 					</li>
 					

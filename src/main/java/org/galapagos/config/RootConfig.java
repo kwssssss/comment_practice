@@ -15,7 +15,9 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
 @Configuration // 설정파일이니 분석하라는 뜻
-@ComponentScan(basePackages = { "org.galapagos.sample", "org.galapagos.service" })
+@ComponentScan(basePackages = { 
+		"org.galapagos.service", 
+		"org.galapagos.controller" })
 @MapperScan(basePackages = { "org.galapagos.mapper" })
 public class RootConfig {
 

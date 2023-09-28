@@ -1,3 +1,10 @@
+const replyAddable = `
+	<button class="btn btn-light btn-sm reply-add-show-btn">
+		<i class="fa-solid fa-pen-to-square"></i> 답글
+	</button>
+`;
+
+
 const commentUpdatable = ` 
 	<button class="btn btn-light btn-sm comment-update-show-btn">
 		<i class="fa-solid fa-pen-to-square"></i> 수정
@@ -13,13 +20,14 @@ function createCommentTemplate(comment, writer) {
 			<div class="comment-title my-2 d-flex justify-content-between">
 				<div>
 					<strong class="writer"> <img
-						src="/security/avatar/sm/{comment.writer}" class="avatar-sm">{comment.writer}
+						src="/security/avatar/sm/{comment.writer}" class="avatar-sm">${comment.writer}
 					</strong> 
 					<span class="text-muted ml-3 comment-date">
 						${moment(comment.regDate).format('YYYY-MM-DD hh:mm')}
 					 </span>
 				</div>
 				<div class="btn-group">
+					${writer && (writer != comment.writer) ? replyAddable : ''}
 					${writer && (writer == comment.writer) ? commentUpdatable : ''}
 				</div>
 			</div>
@@ -39,8 +47,16 @@ async function loadComments(bno, writer) {
 	comments = await rest_get(COMMENT_URL);
 	
 	for(let comment of comments) {
-		const commentEl = createCommentTemplate(comment, writer);
-		$('.comment-list').append($(commentEl));
+		const commentEl = $(createCommentTemplate(comment, writer));
+		$('.comment-list').append(commentEl);
+		
+		let replyListEl = commentEl.find('.reply-list');
+			// 답글 목록 처리
+		for(let reply of comment.replyList) {
+			let replyEl = $(createReplyTemplate(reply, writer));
+			replyListEl.append(replyEl);		
+			
+		};
 	}
 }
 

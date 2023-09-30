@@ -34,7 +34,6 @@
 		from tbl_comment c left join tbl_reply r		
 			on c.no = r.cno
 		where bno = #{bno}
-		order by c.no desc, r.no 
 	</select>
 
 	<select id="get" resultType="CommentVO">
@@ -51,7 +50,8 @@
 
 	<insert id="create">
 		insert into tbl_comment (bno, writer, content)
-		values(#{bno},#{writer}, #{content})
+		values(#{bno},
+		#{writer}, #{content})
 		<selectKey resultType="Long" keyProperty="no" keyColumn="no"
 			order="AFTER">
 			SELECT LAST_INSERT_ID()

@@ -79,7 +79,7 @@ public class SecurityController {
 		
 		File src = new File(MemberServiceImpl.AVATAR_UPLOAD_DIR, username + ".png"); // 있으면 자기꺼 쓰고 없으면 unknown.png 사용
 		if(!src.exists()) {
-			src = new File(MemberServiceImpl.AVATAR_UPLOAD_DIR, "unknown.png");
+			src = new File(MemberServiceImpl.AVATAR_UPLOAD_DIR, "unknownProfile.png");
 		}
 		log.warn(src);
 		response.setHeader("Content-Type", "image/png"); 

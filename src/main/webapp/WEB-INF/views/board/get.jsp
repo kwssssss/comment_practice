@@ -176,7 +176,7 @@ const REPLY_URL = '/api/board/${param.bno}/reply/';
 
 
 		<div class="comment-body">
-			<div class="comment-content">댓글 내용입니다.</div>
+			<div class="comment-content"></div>
 		</div>
 		<div class="reply-list ml-5">
 			<!-- 답글 목록 출력 영역 -->

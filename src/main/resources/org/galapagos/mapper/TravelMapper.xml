@@ -48,6 +48,12 @@
 		where no = #{no}
 	</select>
 	
+	<select id="getRandom" resultType="TravelVO">
+		select * from travel
+		order by rand()
+		limit #{count}
+	</select>
+	
 	<insert id="insert">
 		insert into travel (region, title, description, address, phone)
 		values (#{region},

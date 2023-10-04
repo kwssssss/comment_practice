@@ -45,6 +45,11 @@
 <div id="map" style="width:100%; height:300px; bacground-color:red; "></div>
 <div class="mb-2">${travel.description}</div>
 
+<div class="thumb-images my-5 d-flex">
+	<c:forEach var="image" items="${travel.images}"><img alt="" src="${image}"></c:forEach>
+
+</div>
+
 <c:if test="${result=='success'}">
 	<script>
 		alert("수정이 완료되었습니다.");

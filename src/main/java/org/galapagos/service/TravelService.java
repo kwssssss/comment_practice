@@ -11,6 +11,8 @@ public interface TravelService { //일반적으로 read-create-delete-update순�
 	public int getTotal(Criteria cri);
 	
 	public List<TravelVO> getList(Criteria cri);
+	
+	public List<TravelVO> getRandom(int count);
 
 	public TravelVO get(Long no);
 	

@@ -4,6 +4,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@include file="../layouts/header.jsp"%>
 
+<script 	src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js">
+</script>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"/>
+
 <script>
 	$(document).ready(function() {
 
@@ -24,6 +29,17 @@
 			console.log(document.forms);
 			document.forms.removeForm.submit();
 		}); /* 이벤트 핸들링하는 방법 기억! */
+		
+		$('.sm-images > img').mouseenter(function(e) { // mouseenter < hover시 이벤트
+			let src = $(this).attr('src');
+			$('.image-panel > img').attr('src', src)
+			
+		})
+		
+		Fancybox.bind('[data-fancybox="gallery"]', {
+					// your custom option
+		});
+		
 	});
 </script>
 
@@ -41,14 +57,26 @@
 
 <hr>
 
-<div>주소 : ${travel.address}</div>
-<div id="map" style="width:100%; height:300px; bacground-color:red; "></div>
-<div class="mb-2">${travel.description}</div>
+
+<div class="clearfix">
+    <div class="image-panel float-left mr-3">
+        <img src="${travel.image}" alt="">
+        <div class="sm-images mt-1 d-flex">
+            <c:forEach var="image" items="${travel.images}">
+                <img src="${image}" alt="">
+            </c:forEach>
+        </div>
+    </div>
+    ${travel.description}
+</div>
 
 <div class="thumb-images my-5 d-flex">
-	<c:forEach var="image" items="${travel.images}"><img alt="" src="${image}"></c:forEach>
+	<c:forEach var="image" items="${travel.images}"><a href="${image}" data-fancybox="gallery"><img alt="" src="${image}"></a></c:forEach>
 
 </div>
+
+<div>주소 : ${travel.address}</div>
+<div id="map" style="width:100%; height:300px; bacground-color:red; "></div>
 
 <c:if test="${result=='success'}">
 	<script>

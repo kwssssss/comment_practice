@@ -13,7 +13,7 @@
 		<!-- 좌측 메뉴 구성 -->
 		<ul class="navbar-nav">
 			<li class="nav-item"><a class="nav-link" href="/board/list">보드 게시판</a></li>
-			<li class="nav-item"><a class="nav-link" href="/travel/list">여행지</a></li>
+			<li class="nav-item"><a class="nav-link" href="/travel/list?amount=12">여행지</a></li>
 			<li class="nav-item"><a class="nav-link" href="#">메뉴3</a></li>
 		</ul>
 

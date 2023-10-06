@@ -10,7 +10,43 @@
 
 <%@ include file="../common/search_bar.jsp" %>
 
-<table class="table table-striped table-hover">
+<style>
+.card-img-top {
+	height: 200px;
+	object-fit: cover;
+}
+.card-text {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis; /* 텍스트 넘치는거 ... 처리 */
+}
+</style>
+
+<div class="row">
+	<c:forEach var="travel" items="${list}">
+		<div class="col-sm-6 col-md-4 mb-3">
+			<div class="card" style="width: 100%">
+				<a href="${cri.getLink('get')}&no=${travel.no}">
+					<img class="card-img-top" src="${travel.image}" alt="${travel.title}">
+				</a>
+				<div class="card-body">
+					<h4 class="card-title">
+						<a href="${cri.getLink('get')}&no=${travel.no}">
+							${travel.title}
+						</a>
+					</h4>
+					<a href="#" class="heart">
+						<i class="fa-regular fa-heart text-danger"></i>
+					</a>
+					${travel.hearts}
+					<p class="card-text">${travel.summary}</p>
+				</div>
+			</div>
+		</div>
+	</c:forEach>
+</div>
+
+<%-- <table class="table table-striped table-hover">
 	<thead>
 		<tr>
 			<th style="width: 60px">No</th>
@@ -28,7 +64,7 @@
 		</c:forEach>
 	</tbody>
 
-</table>
+</table> --%>
 
 <%@include file="../common/pagination.jsp"%>
 

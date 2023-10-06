@@ -24,6 +24,7 @@ public class TravelVO {
 	
 	private String address;
 	private String phone;
+	private String hearts;
 	
 	public String getImage() {
 		int i = new Random().nextInt(5) + 1;
@@ -36,5 +37,9 @@ public class TravelVO {
 			list.add(String.format("/resources/images/travel/%03d-%d.jpg", no, i));
 		}
 		return list;
+	}
+	
+	public String getSummary() {
+		return description.split("<br>")[0].replace("<p>", "");
 	}
 }

@@ -18,6 +18,22 @@
 			focus : true, // 에디터 로딩후 포커스를 맞출지 여부
 			lang : "ko-KR", // 한글 설정
 		});
+		
+		const attaches = $('[name="files"]');
+		const attachList = $('#attach-list');
+		
+		attaches.change(function (e) {
+			let fileList = '';
+			for(let file of this.files) { // this -> <input type="file">
+				let fileStr = `
+				<div>
+					<i class="fa-solid fa-file"></i>
+					\${file.name}(\${file.size.formatBytes()}) // filename: 파일명, filesize: 파일크기
+				</div>`;
+				fileList += fileStr;
+			}
+			attachList.html(fileList);
+		})
 	});
 	// 기본 글꼴 설정
 	$('#summernote').summernote('fontName', 'Arial');
@@ -28,16 +44,20 @@
 
 	<div class="panel-body">
 	
-		<form:form modelAttribute="board" role="form"> <!-- form:form 왜씀? 복원하기 편하기 위해서, 근데 이거 하려면 전제조건이 board 이름의 객체가 스코프에 전달되어야함. 왜냐? board 객체를 통해 bno, writer등을 호출할건데 null이니까 다 실패하겠죠? 그럼 board는 어디서 넘어오나요? controller에서 넘어옴 controller에서 보면 get과 post에 둘다@modelAttributeI("board")로 BoardVO가 넘어와야함 만약 모델 어트리뷰트 안하면 BoardVO로 넘어오겠지??? 암튼 이게 get하고 post 둘 다에 붙여줘야함-, form태그를 쓰기 위한 전제조건 ->
+		<form:form modelAttribute="board" role="form" action="?_csrf=${_csrf.token}" enctype="multipart/form-data"> <!-- form:form 왜씀? 복원하기 편하기 위해서, 근데 이거 하려면 전제조건이 board 이름의 객체가 스코프에 전달되어야함. 왜냐? board 객체를 통해 bno, writer등을 호출할건데 null이니까 다 실패하겠죠? 그럼 board는 어디서 넘어오나요? controller에서 넘어옴 controller에서 보면 get과 post에 둘다@modelAttributeI("board")로 BoardVO가 넘어와야함 만약 모델 어트리뷰트 안하면 BoardVO로 넘어오겠지??? 암튼 이게 get하고 post 둘 다에 붙여줘야함-, form태그를 쓰기 위한 전제조건 ->
 			<!-- menu.jsp에 들어가 있는 <sec:authentication property="principal.username" var="username"/>를 통해 principal.username을  -->
-			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-			<form:hidden path="bno"/>
             <form:hidden path="writer" value="${username}" /><!-- menu.jsp에 들어가 있는 <sec:authentication property="principal.username" var="username"/>를 통해 principal.username을 전달받음  -->
 			
 			<div class="form-group">
 				<form:label path="title">제목</form:label> 
 				<form:input path="title" cssClass="form-control"/>
 				<form:errors path="title" cssClass="errors"/>
+			</div>
+			
+			<div class="form-group">
+				<label for="attaches">첨부파일</label>
+				<div id="attach-list" class="my-1"></div>
+				<input type="file" class="form-control" multiple name="files"/>
 			</div>
 			
 			<div class="form-group">

@@ -1,5 +1,6 @@
 package org.galapagos.controller;
 
+import java.security.Principal;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -46,11 +47,11 @@ public class TravelController {
 	}
 	
 	@GetMapping("/list")
-	public void list(@ModelAttribute("cri") Criteria cri, Model model) { //@ModelAttribute("cri") 라고 하면 jsp에서 cri로 접근 가능해짐
+	public void list(@ModelAttribute("cri") Criteria cri, Principal principal, Model model) { //@ModelAttribute("cri") 라고 하면 jsp에서 cri로 접근 가능해짐
 	log.info("list: " + cri);
 	int total= service.getTotal(cri);
 
-	model.addAttribute("list", service.getList(cri));
+	model.addAttribute("list", service.getList(cri, principal));
 	model.addAttribute("pageMaker", new PageDTO(cri, total));// 실제 데이터 건수 어떻게 넣냐??
 	}
 	
@@ -58,10 +59,11 @@ public class TravelController {
 	public void get(
 			@RequestParam("no") Long no,
 			@ModelAttribute("cri") Criteria cri,
+			Principal principal,
 			Model model) {
 
 		log.info("/get or modify");
-		model.addAttribute("travel", service.get(no));
+		model.addAttribute("travel", service.get(no, principal));
 	}
 	
 	@PostMapping("/modify")

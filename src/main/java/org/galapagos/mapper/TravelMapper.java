@@ -3,6 +3,7 @@ package org.galapagos.mapper;
 import java.util.List;
 
 import org.galapagos.domain.Criteria;
+import org.galapagos.domain.HeartVO;
 import org.galapagos.domain.TravelVO;
 
 public interface TravelMapper {
@@ -22,4 +23,11 @@ public interface TravelMapper {
 	public int update(TravelVO travel);
 	
 	public int delete(Long no);
+	
+	// 좋아요 처리
+	public List<Long> getHeartsList(String username); // List < tno 목록
+	
+	public int addHeart (HeartVO heart);
+		// 이 둘은 ajax를 통해 처리할 것들
+	public int deleteHeart (HeartVO heart);
 }

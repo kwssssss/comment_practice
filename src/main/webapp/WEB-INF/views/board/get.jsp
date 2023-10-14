@@ -146,6 +146,18 @@ const REPLY_URL = '/api/board/${param.bno}/reply/';
 		<fmt:formatDate pattern="yyyy-MM-dd" value="${board.regDate}" />
 	</div>
 </div>
+
+<div class ="text-right">
+	<c:forEach var="file" items="${board.attaches}">
+		<div class="attach-file-item">
+			<a href="/board/download/${file.no}" class="file-link">
+				<i class="fa-solid fa-floppy-disk"></i>
+					${file.filename} (${file.formatSize})<br>
+			</a>
+		</div>
+	</c:forEach>
+</div>
+
 <hr>
 <div>${board.content}</div>
 

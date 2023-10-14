@@ -7,6 +7,7 @@ import org.galapagos.domain.BoardVO;
 import org.galapagos.domain.Criteria;
 import org.galapagos.mapper.BoardMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.AllArgsConstructor;
@@ -19,28 +20,27 @@ import lombok.extern.log4j.Log4j;
 public class BoardServiceImpl implements BoardService {
 	// @Autowired / 생성자 주입 아니라 field 앞에 autowired 붙여도 됨
 	private BoardMapper mapper;
-
+	
+	@Transactional(rollbackFor = Exception.class)
 	@Override
-	public void register(BoardVO board, List<MultipartFile> files) {
+	public void register(BoardVO board, List<MultipartFile> files) throws Exception { 
 		mapper.insertSelectKey(board);
 		Long bno = board.getBno();
 		
 		for(MultipartFile part: files) {
 			if(part.isEmpty()) continue;
-			try {
-				BoardAttachmentVO attach = new BoardAttachmentVO(bno, part);
-				mapper.insertAttachment(attach);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			BoardAttachmentVO attach = new BoardAttachmentVO(bno, part);
+			mapper.insertAttachment(attach);
 		}
 	}
 
 	@Override
 	public BoardVO get(Long bno) {
-		log.info("get......" + bno);
-
-		return mapper.read(bno);
+		BoardVO board = mapper.read(bno);
+		
+		List<BoardAttachmentVO> list = mapper.getAttachmentList(bno);
+		board.setAttaches(list);
+		return board;
 
 	}
 
@@ -73,5 +73,14 @@ public class BoardServiceImpl implements BoardService {
 		
 		return mapper.getTotalCount(cri);
 	}
+	
+	@Override
+	public BoardAttachmentVO getAttachment(Long no) {
+		return mapper.getAttachment(no);
+	}
 
+	@Override
+	public boolean removeAttachment(Long no) {
+		return mapper.removeAttachment(no) ==1;
+	}
 }

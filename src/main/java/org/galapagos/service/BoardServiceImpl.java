@@ -44,11 +44,18 @@ public class BoardServiceImpl implements BoardService {
 
 	}
 
+	@Transactional(rollbackFor = Exception.class)
 	@Override
-	public boolean modify(BoardVO board) {
-		log.info("modify......" + board);
-
-		return mapper.update(board) == 1;
+	public boolean modify(BoardVO board, List<MultipartFile> files) throws Exception {
+		int result = mapper.update(board);
+		Long bno = board.getBno();
+		
+		for(MultipartFile part: files) {
+			if(part.isEmpty()) continue;
+			BoardAttachmentVO attach = new BoardAttachmentVO(bno, part);
+			mapper.insertAttachment(attach);
+		}
+		return result == 1;
 
 	}
 
@@ -83,4 +90,6 @@ public class BoardServiceImpl implements BoardService {
 	public boolean removeAttachment(Long no) {
 		return mapper.removeAttachment(no) ==1;
 	}
+	
+
 }

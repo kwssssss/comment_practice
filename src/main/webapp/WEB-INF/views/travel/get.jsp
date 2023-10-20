@@ -72,7 +72,15 @@
 
 <div class="thumb-images my-5 d-flex">
 	<c:forEach var="image" items="${travel.images}"><a href="${image}" data-fancybox="gallery"><img alt="" src="${image}"></a></c:forEach>
+</div>
 
+<div class="my-5">
+	<h4>주변 볼거리</h4>
+	<c:forEach var="local" items="${travel.locals}">
+		<div>
+			${local.placeName} / ${local.roadAddressName} / ${local.phone}
+		</div>
+	</c:forEach>
 </div>
 
 <div>주소 : ${travel.address}</div>

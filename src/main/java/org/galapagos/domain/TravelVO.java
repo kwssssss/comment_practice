@@ -6,6 +6,8 @@ import java.util.Random;
 
 import javax.validation.constraints.NotBlank;
 
+import org.galapagos.domain.kakao.local.Local;
+
 import lombok.Data;
 
 @Data
@@ -26,6 +28,8 @@ public class TravelVO {
 	private String phone;
 	private String hearts;
 	private Boolean myHearts;
+	
+	List<Local> locals; // 주변 검색 결과 목록
 	
 	public String getImage() {
 		int i = new Random().nextInt(5) + 1;

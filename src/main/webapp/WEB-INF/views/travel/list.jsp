@@ -20,6 +20,11 @@
 	overflow: hidden;
 	text-overflow: ellipsis; /* 텍스트 넘치는거 ... 처리 */
 }
+.card-title {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis; /* 텍스트 넘치는거 ... 처리 */
+}
 </style>
 
 <c:if test="${not empty username}">
